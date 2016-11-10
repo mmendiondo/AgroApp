@@ -1,0 +1,85 @@
+<%- model_class = Fertilizante -%>
+
+
+<style>
+thead th, thead td, tfoot th, tfoot td {
+    color: #2E3038;
+    vertical-align: top;
+    background: #e5e7ec;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(1%, #f5f6fa), color-stop(85%, #e5e7ec));
+    background: -webkit-linear-gradient(top, #ffffff 0%, #f5f6fa 1%, #e5e7ec 85%);
+    background: -moz-linear-gradient(top, #ffffff 0%, #f5f6fa 1%, #e5e7ec 85%);
+    background: -ms-linear-gradient(top, #ffffff 0%, #f5f6fa 1%, #e5e7ec 85%);
+    background: -o-linear-gradient(top, #ffffff 0%, #f5f6fa 1%, #e5e7ec 85%);
+    background: linear-gradient(to bottom, #ffffff 0%, #f5f6fa 1%, #e5e7ec 85%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fff5f6fa', endColorstr='#ffe5e7ec', GradientType=0 );
+    filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 1);
+
+}
+</style>
+
+<div class="page-header" >
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped sortable" data-toggle="table" data-pagination="true"
+       data-search="true"
+       data-query-params="queryParams"
+       data-height="300" >
+  <thead>
+    <tr>
+      <th data-sortable="true"><%= model_class.human_attribute_name(:id) %></th>
+      <th data-sortable="true"><%= model_class.human_attribute_name(:nombre) %></th>
+      <th data-sortable="true"><%= model_class.human_attribute_name(:descripcion) %></th>
+      <th data-sortable="true"><%= model_class.human_attribute_name(:precio) %></th>
+      <th data-sortable="true"><%= model_class.human_attribute_name(:cantidad) %></th>
+      <th data-sortable="true"><%= model_class.human_attribute_name(:created_at) %></th>
+      <th data-sortable="true"><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fertilizantes.each do |fertilizante| %>
+      <tr>
+        <td><%= link_to fertilizante.id, fertilizante_path(fertilizante) %></td>
+        <td><%= fertilizante.nombre %></td>
+        <td><%= fertilizante.descripcion %></td>
+        <td><%= fertilizante.precio %></td>
+        <td><%= fertilizante.cantidad %></td>
+        <td><%=l fertilizante.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_fertilizante_path(fertilizante), :class => 'btn btn-default ' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      fertilizante_path(fertilizante),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_fertilizante_path,
+            :class => 'btn btn-primary' %>
+
+<script type="text/javascript">
+
+function queryParams() {
+    return {
+        type: 'owner',
+        sort: 'updated',
+        direction: 'desc',
+        per_page: 100,
+        page: 1
+    };
+}
+
+  // $(document).ready(function() {
+  //     $('.sortable').DataTable( {
+  //         "responsive": true,
+  //         "order": [[ 3, "desc" ]]
+  //     } );
+  // } );
+</script>
